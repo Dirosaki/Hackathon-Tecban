@@ -2,19 +2,25 @@
 let menu = document.querySelector('.menu');
 let barras = document.querySelectorAll('.barra');
 let nav = document.querySelector('.navigation-close');
-let contas = document.querySelector('.contas');
 
 menu.addEventListener('click', () => {
     nav.classList.toggle('navigation-open');
     for(let barra of barras){
         barra.classList.toggle('barra-open');
     };
-    contas.classList.toggle('contas-navopen');
+    verifyContas();
 });
 
 // Contas
+let contas = document.querySelector('.contas');
 
-
+function verifyContas() {
+    if(nav.classList.length == 2) {
+        contas.classList.add('contas-navopen');
+    } else {
+        contas.classList.remove('contas-navopen');
+    }
+}
 
 // Assistente
 let jessieAssist = document.querySelector('.jessie');
@@ -28,8 +34,10 @@ let body = document.querySelector('body');
 (function verify() {
     if(localStorage.getItem('introducao') != 'true') {
         jessieAssist.style.display = 'flex';
+        contas.style.display = 'none';
     } else {
         jessieAssist.style.display = 'none';
+        contas.style.display = 'flex';
     }
 })()
 
@@ -66,12 +74,8 @@ body.addEventListener('click', (event) => {
     }
     if(event.target.dataset.number == 5) {
         startIntro.style.display = 'none';
-        if(nav.classList.length > 1){
-            contas.classList.toggle('contas-navopen');
-            contas.style.display = 'flex';
-        }
         contas.style.display = 'flex';
-        contas.classList.remove('contas-navopen');
+        verifyContas();
     }
 })
 
